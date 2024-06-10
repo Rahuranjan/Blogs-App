@@ -1,6 +1,6 @@
 import { Avatar, Box, Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
 import React, { useCallback } from 'react'
-import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+// import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -11,10 +11,10 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
   const navigate = useNavigate();
 
 
-  const handleEdit = () => {
+  // const handleEdit = () => {
 
-    navigate(`/myBlogs/${id}`);
-  };
+  //   navigate(`/myBlogs/${id}`);
+  // };
 
   const deleteRequest = useCallback(async () => {
     const res = await axios
@@ -46,9 +46,9 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
       }}>
         {isUser && (
           <Box display="flex">
-            <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
+            {/* <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
               <ModeEditOutlineIcon color="warning" />
-            </IconButton>
+            </IconButton> */}
             <IconButton onClick={handleDelete}>
               <DeleteForeverIcon color="error" />
             </IconButton>
@@ -56,7 +56,7 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
         )}
         <CardHeader 
           avatar={
-            <Avatar sx={{ bgcolor: "red",fontSize: "1.5rem", }} aria-label="recipe">
+            <Avatar sx={{ bgcolor: "red",fontSize: "1.5rem", }} aria-label="recipe">   
               {username ? username.charAt(0) : ""}
             </Avatar>
           }
@@ -66,16 +66,15 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
         />
         <CardMedia
           component="img"
-          height="500px"
-          width= "400px"
+          height="450px"
           image={imageURL}
           alt="Image Not Found"
-          style={{ objectFit: 'contain', width: '100%'}}
+          style={{ objectFit: 'contain'}}
         />
         <CardContent>
           <hr />
           <br />
-          <Typography variant="body2" color="text.secondary" sx={{ fontSize: "1.5rem"}}>
+          <Typography variant="body2" color="text.secondary" >
             <b>{username}</b> {": "}{description}
           </Typography>
         </CardContent>
