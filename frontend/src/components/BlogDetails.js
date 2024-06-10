@@ -16,14 +16,18 @@ const BlogDetails = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  const fetchDetails = async () => {
-    const res = await axios
-      .get(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/${id}`)
-      .catch((err) => console.log(err));
-    const data = await res.data;
-    return data;
-  };
+  
   useEffect(() => {
+
+    const fetchDetails = async () => {
+      const res = await axios
+        .get(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/${id}`)
+        .catch((err) => console.log(err));
+      const data = await res.data;
+      return data;
+    };
+
+
     fetchDetails().then((data) => {
       setBlog(data.blog);
       setInputs({
@@ -34,7 +38,7 @@ const BlogDetails = () => {
   }, [id]);
   const sendRequest = async () => {
     const res = await axios
-      .put(`http://localhost:5000/blogs/updateblog/${id}`, {
+      .put(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/updateblog/${id}`, {
         title: inputs.title,
         description: inputs.description,
       })

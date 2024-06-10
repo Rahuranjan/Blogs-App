@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Blog from './Blog';
 
@@ -6,16 +6,16 @@ const UserBlogs = () => {
   const [user, setUser] = useState();
 
   const id = localStorage.getItem("userId");
-  const sendRequest = async () => {
+  const sendRequest = useCallback(async () => {
     const res = await axios.get(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/user/${id}`).catch(err => console.log(err))
 
     const data = await res.data;
     return data;
-  }
+  }, [id])
   // console.log("data are",data.user)
   useEffect(() => {
     sendRequest().then(data => setUser(data.user) )
-  },[])
+  },[sendRequest])
   console.log("user blogs", user)
   return (
     <div>

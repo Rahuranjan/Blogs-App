@@ -1,36 +1,35 @@
 import { Avatar, Box, Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
-import React from 'react'
+import React, { useCallback } from 'react'
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const Blog = ({ title, description, imageURL, username, id, isUser }) => {
-  const currentDate = new Date();
-
-  const formatDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  }
-  const formattedDate = formatDate(currentDate);
+  
 
   const navigate = useNavigate();
+
+
   const handleEdit = () => {
+
     navigate(`/myBlogs/${id}`);
   };
 
-  const deleteRequest = async () => {
+  const deleteRequest = useCallback(async () => {
     const res = await axios
       .delete(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/deleteblog/${id}`)
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
-  };
+  },[id]);
 
   const handleDelete = () => {
     deleteRequest()
       .then(() => navigate("/"))
-      .then(() => navigate("/blogs"));
+      .then(() => navigate("/blogs")).then(() => window.location.reload());
+
+      alert("Blog Deleted Successfully")
   };
 
   return (
