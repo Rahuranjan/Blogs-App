@@ -7,7 +7,7 @@ const UserBlogs = () => {
 
   const id = localStorage.getItem("userId");
   const sendRequest = async () => {
-    const res = await axios.get(`http://localhost:5000/blogs/user/${id}`).catch(err => console.log(err))
+    const res = await axios.get(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/user/${id}`).catch(err => console.log(err))
 
     const data = await res.data;
     return data;

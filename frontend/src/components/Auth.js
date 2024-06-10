@@ -26,7 +26,7 @@ const Auth = () => {
   };
 
   const sendRequest = async (type = "login") => {
-    const res = await axios.post(`http://localhost:5000/users/${type}`, {
+    const res = await axios.post(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/users/${type}`, {
       name: inputs.name,
       email: inputs.email,
       password: inputs.password

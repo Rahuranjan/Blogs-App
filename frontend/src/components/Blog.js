@@ -21,7 +21,7 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
 
   const deleteRequest = async () => {
     const res = await axios
-      .delete(`http://localhost:5000/blogs/deleteblog/${id}`)
+      .delete(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/deleteblog/${id}`)
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
@@ -67,9 +67,11 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
         />
         <CardMedia
           component="img"
-          height="100%"
+          height="500px"
+          width= "400px"
           image={imageURL}
           alt="Image Not Found"
+          style={{ objectFit: 'contain', width: '100%'}}
         />
         <CardContent>
           <hr />
