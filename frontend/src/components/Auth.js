@@ -82,7 +82,7 @@ const Auth = () => {
           <Typography 
             padding={3} 
             textAlign='center' 
-            variant='h2'> 
+            variant='h3'> 
               {isSignup ? "Signup" : "Login"} 
           </Typography>
 

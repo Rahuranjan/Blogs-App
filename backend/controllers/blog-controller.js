@@ -1,6 +1,14 @@
 const { default: mongoose } = require('mongoose');
 const Blog = require('../model/Blog.js');
 const User = require('../model/User.js');
+const ImageKit = require("imagekit");
+
+
+const imagekit = new ImageKit({
+    publicKey : "public_PxFSEdLkJHrQEvnT1ZOk8gS74WA=",
+    privateKey : "private_C5di7uripkauX4iczpv6kXrnG4s=",
+    urlEndpoint : "https://ik.imagekit.io/lwmj8ey7f"
+  });
 
 
 const getAllBlogs = async (req, res) => {
@@ -16,8 +24,26 @@ const getAllBlogs = async (req, res) => {
     return res.status(200).json({ blogs });
 };
 
+// Function to upload a single file to ImageKit
+const uploadToImageKit = (file) => {
+    return new Promise((resolve, reject) => {
+        imagekit.upload({
+            file: file.buffer, // Use buffer instead of file stream
+            fileName: `${file.originalname}`, // Keep original name
+        }, (error, result) => {
+            if (error) {
+                console.error('ImageKit upload error:', error);
+                return reject(error);
+            }
+            resolve(result.url); // Store the URL in the local array once uploaded
+            console.log("image url are:", result.url);
+        });
+    });
+};
+
 const addBlog = async (req, res) => {
-    const { title, description, image, user } = req.body;
+    const { title, description, user } = req.body;
+    const { file } = req;
 
     let existingUser;
     try {
@@ -26,10 +52,17 @@ const addBlog = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 
+    let imageUrl;
+    try {
+        imageUrl = await uploadToImageKit(file); // Upload image and get URL
+    } catch (err) {
+        return res.status(500).json({ message: 'Image upload failed' });
+    }
+
     const blog = new Blog({
         title,
         description,
-        image,
+        image: imageUrl,
         user,
     });
 

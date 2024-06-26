@@ -1,20 +1,20 @@
 import { Avatar, Box, Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
 import React, { useCallback } from 'react'
-// import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const Blog = ({ title, description, imageURL, username, id, isUser }) => {
-  
+
 
   const navigate = useNavigate();
 
 
-  // const handleEdit = () => {
+  const handleEdit = () => {
 
-  //   navigate(`/myBlogs/${id}`);
-  // };
+    navigate(`/myBlogs/${id}`);
+  };
 
   const deleteRequest = useCallback(async () => {
     const res = await axios
@@ -22,20 +22,20 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
-  },[id]);
+  }, [id]);
 
   const handleDelete = () => {
     deleteRequest()
       .then(() => navigate("/"))
       .then(() => navigate("/blogs")).then(() => window.location.reload());
 
-      alert("Blog Deleted Successfully")
+    alert("Blog Deleted Successfully")
   };
 
   return (
     <div>
       <Card sx={{
-        width: "40%",
+        width: "30%",
         margin: "auto",
         mt: 2,
         padding: 2,
@@ -46,30 +46,36 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
       }}>
         {isUser && (
           <Box display="flex">
-            {/* <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
+            <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
               <ModeEditOutlineIcon color="warning" />
-            </IconButton> */}
+            </IconButton>
             <IconButton onClick={handleDelete}>
               <DeleteForeverIcon color="error" />
             </IconButton>
           </Box>
         )}
-        <CardHeader 
+        <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: "red",fontSize: "1.5rem", }} aria-label="recipe">   
+            <Avatar sx={{ bgcolor: "red", fontSize: "1.5rem", }} aria-label="recipe">
               {username ? username.charAt(0) : ""}
             </Avatar>
           }
 
-          title= <span style={{ fontSize: "1.5rem"}} >{title}</span>
-          // subheader={formattedDate}
+          title=<span style={{ fontSize: "1.5rem" }} >{title}</span>
+        // subheader={formattedDate}
         />
         <CardMedia
           component="img"
-          height="450px"
+          height="375px"
           image={imageURL}
           alt="Image Not Found"
-          style={{ objectFit: 'contain'}}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            objectFit: 'contain',
+            margin: 'auto'
+          }}
         />
         <CardContent>
           <hr />

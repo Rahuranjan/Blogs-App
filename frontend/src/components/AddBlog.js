@@ -10,8 +10,9 @@ const AddBlog = () => {
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
-    imageURL: "",
+    image: null
   });
+
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -19,13 +20,29 @@ const AddBlog = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setInputs((prevState) => ({
+      ...prevState,
+      image: file,
+    }));
+  };
+
+
   const sendRequest = async () => {
+
+    const formdata = new FormData();
+    formdata.append('title', inputs.title);
+    formdata.append('description', inputs.description);
+    formdata.append('user', localStorage.getItem("userId"));
+    if (inputs.image) {
+      formdata.append('image', inputs.image);
+    }
+    // 
     const res = await axios
-      .post("https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/addblog", {
-        title: inputs.title,
-        description: inputs.description,
-        image: inputs.imageURL,
-        user: localStorage.getItem("userId"),
+      .post("https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/addblog", formdata, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       })
       .catch((err) => console.log(err));
     const data = await res.data;
@@ -43,7 +60,7 @@ const AddBlog = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <Box
           border={3}
           borderColor="linear-gradient(90deg, rgba(58,75,180,1) 2%, rgba(116,49,110,1) 36%, rgba(2,0,161,1) 73%, rgba(69,92,252,1) 100%)"
@@ -86,14 +103,13 @@ const AddBlog = () => {
             variant="outlined"
           />
           <InputLabel sx={labelStyles}>
-            ImageURL
+            Image
           </InputLabel>
-          <TextField
-            name="imageURL"
-            onChange={handleChange}
-            value={inputs.imageURL}
-            margin="auto"
-            variant="outlined"
+          
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
           />
           <Button
             sx={{ mt: 4, borderRadius: 4, padding: 2}}

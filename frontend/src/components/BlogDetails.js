@@ -18,7 +18,6 @@ const BlogDetails = () => {
   };
   
   useEffect(() => {
-
     const fetchDetails = async () => {
       const res = await axios
         .get(`https://2e83d443-303b-404e-83b2-32ab83a700a2.e1-us-east-azure.choreoapps.dev/blogs/${id}`)
@@ -53,7 +52,7 @@ const BlogDetails = () => {
     console.log(inputs);
     sendRequest()
       .then((data) => console.log(data))
-      .then(() => navigate("/myBlogs/"));
+      .then(() => navigate("/myBlogs"));
   };
   return (
     <div>
