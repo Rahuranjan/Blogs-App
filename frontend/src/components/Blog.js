@@ -66,6 +66,7 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
         <CardMedia
           component="img"
           height="300px"
+          width="70%"
           image={imageURL}
           alt="Image Not Found"
           style={{
