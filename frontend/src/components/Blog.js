@@ -55,12 +55,12 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
         )}
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: "red", fontSize: "1.5rem", }} aria-label="recipe">
+            <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
               {username ? username.charAt(0) : ""}
             </Avatar>
           }
 
-          title=<span style={{ fontSize: "1.5rem" }} >{title}</span>
+          title={title}
         // subheader={formattedDate}
         />
         <CardMedia
