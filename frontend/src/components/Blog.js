@@ -26,8 +26,7 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
 
   const handleDelete = () => {
     deleteRequest()
-      .then(() => navigate("/"))
-      .then(() => navigate("/blogs")).then(() => window.location.reload());
+      .then(() => navigate("/blogs"));
 
     alert("Blog Deleted Successfully")
   };
@@ -66,7 +65,7 @@ const Blog = ({ title, description, imageURL, username, id, isUser }) => {
         />
         <CardMedia
           component="img"
-          height="375px"
+          height="300px"
           image={imageURL}
           alt="Image Not Found"
           style={{
